@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="needscrol">
+    <div class="container">
+        <!-- Profile Image -->
+        <div class="profile-image-container">
+            <img id="profile-image" src="images/logo4.png" alt="Profile Image" class="profile-image">
+        </div>
+
+        <!-- Version Info -->
+        <h2 class="version-info">Física Fascínio Quiz-Versão 1.0</h2>
+
+        <!-- Update Messages -->
+        <h3>Atualizações</h3>
+        <div id="updateMessageBox" class="message-box"></div>
+
+        <!-- About Section -->
+        <h3>Sobre</h3>
+        <div id="aboutMessageBox" class="message-box"></div>
+
+        <!-- Support Section -->
+        <h3>Suporte e Sugestões</h3>
+        <div id="supportMessageBox" class="message-box">
+            Para suporte e sugestões, entre em contato com: <a href="mailto:profguilhermebila@gmail.com">profguilhermebila@gmail.com</a>
+        </div>
+    </div>
+
+    <!-- Incluindo as bibliotecas Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
+
+    <!-- Arquivo de configuração Firebase -->
+    <script src="firebase-config.js" type="module"></script>
+
+    <!-- Script para carregar as mensagens do perfil -->
+    <script src="profile.js" type="module"></script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rank</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Rank</h1>
+        <div id="leaderboard">
+            <!-- Lista dos usuários será inserida aqui -->
+        </div>
+    </div>
+
+    <!-- Incluindo as bibliotecas Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
+
+    <!-- Arquivo de configuração Firebase -->
+    <script src="firebase-config.js" type="module"></script>
+
+    <!-- Script para gerar o Leaderboard -->
+    <script src="leaderboard.js" type="module"></script>
+</body>
+</html>

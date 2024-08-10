@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main - Física Fascínio Quiz</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        
+        .buttons-container {
+            margin-top: 6px;
+            margin-block-end: 5px; 
+        }
+
+        .menu-btn {
+            display: block;
+            margin-bottom: 10px; /* Espaçamento entre os botões */
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .menu-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div id="main" class="main-container">
+        <!-- Toolbar -->
+        <div id="toolbar" class="toolbar">
+            <img src="images/logo6.png" alt="Logo" class="logo">
+            <h1 class="title">Física Fascínio Quiz</h1>
+            <button id="logoutBtn" class="toolbar-btn">Sair</button>
+        </div> 
+        
+        <!-- Botões de ação -->
+        <div class="buttons-container">
+            <button id="spinWheelBtn" class="menu-btn">Girar a Roleta</button>
+            <button id="howToPlayBtn" class="menu-btn">COMO JOGAR?</button>
+            <button id="inviteFriendsBtn" class="menu-btn">Convidar Amigos</button>
+        </div>
+        
+        <!-- Content -->
+        <div id="content" class="content">
+            <p>Carregando categorias...</p>
+            <!-- Categorias serão carregadas aqui -->
+        </div>
+        
+        <!-- Bottom Navigation -->
+        <div id="bottomBar" class="bottom-bar">
+            <button class="bottom-btn" data-section="home">
+                <img src="images/home.png" alt="Home">
+                Início
+            </button>
+            <button class="bottom-btn" data-section="leaderboards">
+                <img src="images/ranking.png" alt="Rank">
+                Rank
+            </button>
+            <button class="bottom-btn" data-section="wallet">
+                <img src="images/wallet.png" alt="Wallet">
+                Carteira
+            </button>
+            <button class="bottom-btn" data-section="profile">
+                <img src="images/info.png" alt="Info">
+                Info
+            </button>
+        </div>
+    </div>
+    
+    <script type="module" src="app.js"></script>
+    <script>
+        // Event Listeners para os botões
+        document.getElementById('spinWheelBtn').addEventListener('click', () => {
+            window.location.href = 'spinner.html';
+        });
+
+        document.getElementById('howToPlayBtn').addEventListener('click', () => {
+            window.location.href = 'howtoplay.html';
+        });
+
+        document.getElementById('inviteFriendsBtn').addEventListener('click', () => {
+            shareApp(firestore);
+        });
+    </script>
+</body>
+</html>

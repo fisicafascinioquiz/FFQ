@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucky Wheel</title>
+    <link rel="stylesheet" href="spinner.css">
+</head>
+<body>
+    <div id="main">
+        <button id="btnback">Voltar</button>
+        <img id="headerImage" src="images/gire_ganhar.png" alt="Gire e Ganhe">
+        <div id="info">
+            <p id="tvRemainingSpins">Tentativas restantes: 3</p>
+            <p id="tvCountdownTimer">Reinicia em: 00:00:00</p>
+        </div>
+        <div id="wheelContainer">
+            <canvas id="wheelCanvas" width="300" height="300"></canvas>
+            <!-- Adicione o ponteiro aqui -->
+            <img id="pointer" src="images/spinpin.webp" alt="Pointer">
+            <img id="spinBtn" src="images/spin_btn.png" alt="Spin Button">
+        </div>
+        
+    </div>
+
+    <!-- Marcar o script como módulo -->
+    <script type="module" src="spinner.js"></script>
+</body>
+</html>

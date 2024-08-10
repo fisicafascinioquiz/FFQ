@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carteira</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="nested-scroll">
+        <div class="constraint-layout">
+            <div class="card-view">
+                <div class="card-content">
+                    <div class="subtitle">Suas PhysiCoins</div>
+                    <div class="divider"></div>
+                    <div id="current-coins" class="coins"></div>
+                    <p>10.000 PhysiCoins necessárias para trocar</p>
+                    <div class="input-container">
+                        <img src="images/email.png" alt="email icon" class="input-icon">
+                        <input type="email" id="email-box" class="input-text" placeholder="Email do professor">
+                    </div>
+                    <button id="send-request" class="btn btn-orange">ENVIAR</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js" type="module"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js" type="module"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js" type="module"></script>
+    <script src="firebase-config.js" type="module"></script>
+    <script src="wallet.js" type="module"></script>
+</body>
+</html>

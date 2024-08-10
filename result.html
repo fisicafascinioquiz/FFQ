@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Results</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="nested-scroll">
+        <div class="constraint-layout">
+            <div class="card-view">
+                <div class="card-content">
+                    <img id="imageView5" src="images/trophy.png" alt="Trophy" class="image-view">
+                    <h1 id="textView9" class="text-view">Parabéns!</h1>
+                    <h2 id="textView12" class="text-view">SUA PONTUAÇÃO</h2>
+                    <h1 id="score" class="text-view score">8/10</h1>
+                    <div class="divider"></div>
+                    <h2 id="textView14" class="text-view">PhysiCoins</h2>
+                    <h1 id="earnedCoins" class="text-view coins">
+                        <img src="images/dollar.png" alt="Dollar Icon" class="icon">500
+                    </h1>
+                    <div class="button-container">
+                        <button id="shareBtn" class="button">
+                            <img src="images/compartilhar.png" alt="Share Icon" class="icon">Compartilhar resultado
+                        </button>
+                        <button id="restartBtn" class="button">Reiniciar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="result.js"></script>
+</body>
+</html>

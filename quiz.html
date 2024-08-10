@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Timer and Question Counter -->
+        <div class="header">
+            <div class="timer-container">
+                <img src="images/cronometro.png" alt="Cronômetro" class="icon2">
+                <div id="timer" class="timer">24</div>
+            </div>
+            <div class="question-counter-container">
+                <img src="images/questao.png" alt="Questão" class="icon2">
+                <div id="questionCounter" class="question-counter">1/10</div>
+            </div>
+        </div>
+
+        <!-- Question Section -->
+        <div id="questionSection" class="question-section">
+            <div id="question" class="question">O que é Temperatura?</div>
+            <img id="questionImage" class="question-image" src="" alt="Question Image" style="display: none;">
+        </div>
+
+        <!-- Options Section -->
+        <div id="optionsSection" class="options-section">
+            <div id="option1" class="option"></div>
+            <div id="option2" class="option"></div>
+            <div id="option3" class="option"></div>
+            <div id="option4" class="option"></div>
+        </div>
+
+        <!-- Buttons Section -->
+        <div class="buttons-section">
+            <button id="fiftyFiftyBtn" class="control-btn" onclick="useFiftyFifty()">50:50</button>
+            <button id="audiencePollBtn" class="control-btn" onclick="useAudiencePoll()">Enquete</button>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="navigation-section">
+            <button id="prevBtn" class="nav-btn2" onclick="prevQuestion()">FECHAR</button>
+            <button id="nextBtn" class="nav-btn" onclick="nextQuestion()">PRÓXIMA</button>
+        </div>
+    </div>
+
+    <!-- Fullscreen Image Modal -->
+    <div id="fullscreenImage" class="fullscreen-image" onclick="toggleFullscreenImage()" style="display: none;"></div>
+
+    <!-- Incluindo as bibliotecas Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
+
+    <!-- Arquivo de configuração Firebase -->
+    <script src="firebase-config.js" type="module"></script>
+
+    <!-- Script para o Quiz -->
+    <script src="quiz.js" type="module"></script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup - Física Fascínio Quiz</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="module" src="firebase-config.js"></script>
+    <script type="module">
+        import { auth, firestore } from './firebase-config.js';
+        import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
+        import { doc, setDoc } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('signupBtn').addEventListener('click', async () => {
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                const referCode = document.getElementById('referCode').value;
+
+                try {
+                    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                    const userId = userCredential.user.uid;
+
+                    await setDoc(doc(firestore, "users", userId), {
+                        name: name,
+                        email: email,
+                        pass: password,
+                        referCode: referCode,
+                        coins: 25,
+                        remainingSpins: 3
+                    });
+
+                    window.location.href = 'main.html';
+                } catch (error) {
+                    alert("Erro ao criar conta: " + error.message);
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="nested-scroll">
+        <div class="constraint-layout">
+            <!-- Logo -->
+            <img src="images/logo6.png" alt="Logo Física Fascínio Quiz" class="image-view">
+            
+            <!-- Título -->
+            <h1 class="title">Física Fascínio Quiz</h1>
+            
+            <!-- Card de Signup -->
+            <div class="card-view">
+                <div class="card-content">
+                    <!-- Subtítulo -->
+                    <h2 class="subtitle">Crie sua conta</h2>
+                    
+                    <!-- Divisor -->
+                    <div class="divider"></div>
+                    
+                    <!-- Campos de Entrada -->
+                    <div class="input-container">
+                        <img src="images/user.png" alt="Ícone de Usuário" class="input-icon">
+                        <input type="text" id="name" placeholder="Nome Completo" class="input-text" required>
+                    </div>
+
+                    <div class="input-container">
+                        <img src="images/email.png" alt="Ícone de Email" class="input-icon">
+                        <input type="email" id="email" placeholder="Email" class="input-text" required>
+                    </div>
+
+                    <div class="input-container">
+                        <img src="images/chave.png" alt="Ícone de Senha" class="input-icon">
+                        <input type="password" id="password" placeholder="Senha" class="input-text" required>
+                    </div>
+
+                    <div class="input-container">
+                        <img src="images/senha.png" alt="Ícone de Lembrete de Senha" class="input-icon">
+                        <input type="text" id="referCode" placeholder="Lembrete de senha" class="input-text">
+                    </div>
+                    
+                    <!-- Botões -->
+                    <button id="signupBtn" class="btn btn-orange">CADASTRAR</button>
+
+                    <!-- Link para login -->
+                    <p class="terms-text">Já tem uma conta? <a href="login.html">Login</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
