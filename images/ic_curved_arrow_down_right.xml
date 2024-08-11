@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <!-- Path for the curved arrow starting from the right and pointing down -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M22,12
+                         C22,16.418 18.418,20 14,20
+                         L14,15
+                         L10,19
+                         L14,23
+                         L14,18
+                         C19.523,18 24,13.523 24,8
+                         C24,3.582 20.418,0 16,0
+                         L16,4
+                         C19.314,4 22,6.686 22,10
+                         Z"/>
+</vector>
