@@ -161,22 +161,25 @@ document.addEventListener('DOMContentLoaded', async () => {
     
         async function resetSpins() {
             if (!userId) return;
-    
+        
             const now = new Date();
             const userDocRef = doc(firestore, "users", userId);
-            const currentHour = now.getHours();
-
+        
             try {
                 const userDoc = await getDoc(userDocRef);
                 const lastUpdate = userDoc.data().lastUpdate?.toDate();
-
+        
+                const currentHour = now.getHours();
                 let shouldUpdate = false;
-                if (currentHour < 12) {
-                    shouldUpdate = !lastUpdate || lastUpdate.getHours() >= 12;
-                } else {
+        
+                if (currentHour >= 12) {
+                    // Período de meio-dia até meia-noite
                     shouldUpdate = !lastUpdate || lastUpdate.getHours() < 12;
+                } else {
+                    // Período de meia-noite até meio-dia
+                    shouldUpdate = !lastUpdate || lastUpdate.getHours() >= 12;
                 }
-
+        
                 if (shouldUpdate) {
                     await updateDoc(userDocRef, { remainingSpins: 3, lastUpdate: now });
                     console.log("Tentativas restantes atualizadas para 3.");
@@ -187,6 +190,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 console.error("Erro ao atualizar remainingSpins:", error);
             }
         }
+        
     
         updateCountdown();
     }
