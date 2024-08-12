@@ -7,6 +7,7 @@ body {
     align-items: center;
     height: 100vh;
     background-color: #f4f4f4;
+    overflow: hidden;
 }
 
 .nested-scroll {
@@ -374,6 +375,7 @@ body {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
 }
 
 h1 {
@@ -472,6 +474,11 @@ h3 {
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin: 0 auto; /* Center the container */
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 .header {
@@ -513,8 +520,13 @@ h3 {
 }
 
 .question-section {
+    flex: 1; /* Faz com que esta seção ocupe o espaço restante */
     margin-bottom: 20px;
-    word-wrap: break-word; /* Allow long words to break */
+    overflow-y: auto; /* Adiciona rolagem vertical se necessário */
+    word-wrap: break-word;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .question {
@@ -522,6 +534,7 @@ h3 {
     text-align: center;
     margin-bottom: 20px;
     overflow-wrap: break-word; /* Allow long text to break */
+    padding: 0 10px;
 }
 
 .question-image {
