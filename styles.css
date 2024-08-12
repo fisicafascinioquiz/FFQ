@@ -43,7 +43,7 @@ body {
 }
 
 .card-view {
-    width: calc(100% - 64px);
+    width: calc(10% - 64px);
     margin-top: 10px;
     background: white;
     border-radius: 20px;
