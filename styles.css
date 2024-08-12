@@ -173,7 +173,7 @@ body {
     padding: 16px;
     background-color: #bebebe; /* Este valor estava diferente */
     overflow-y: auto;
-    max-height: 56%;
+    max-height: 52%;
 }
 
 .bottom-bar {
