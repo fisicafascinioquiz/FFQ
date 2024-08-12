@@ -1,5 +1,5 @@
 import { auth, firestore } from './firebase-config.js';
-import { doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+import { doc, getDoc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
 
 document.addEventListener('DOMContentLoaded', async () => {
     const canvas = document.getElementById('wheelCanvas');
@@ -26,7 +26,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     let isSpinning = false;
     let remainingSpins = 0;
     let userId = null;
-    let lastUpdate = null;
 
     async function fetchRemainingSpins() {
         if (!userId) return;
@@ -35,8 +34,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         const userDoc = await getDoc(userDocRef);
         if (userDoc.exists()) {
             remainingSpins = userDoc.data().remainingSpins || 0;
-            lastUpdate = userDoc.data().lastUpdate || null;
             tvRemainingSpins.textContent = `Tentativas restantes: ${remainingSpins}`;
+            await checkAndResetSpinsIfNecessary(userDoc.data().lastUpdate);
         } else {
             console.log("Documento de usuário não encontrado.");
         }
@@ -55,7 +54,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function drawWheel() {
         context.clearRect(0, 0, canvas.width, canvas.height);
-    
+
         items.forEach((item, index) => {
             const angle = startAngle + index * arcSize;
             context.beginPath();
@@ -65,19 +64,19 @@ document.addEventListener('DOMContentLoaded', async () => {
             context.lineTo(wheelRadius, wheelRadius);
             context.fill();
             context.save();
-    
+
             context.translate(
                 wheelRadius + Math.cos(angle + arcSize / 2) * (wheelRadius - 40),
                 wheelRadius + Math.sin(angle + arcSize / 2) * (wheelRadius - 40)
             );
             context.rotate(angle + arcSize / 2 + Math.PI / 2);
-    
+
             context.fillStyle = item.textColor;
             context.font = 'bold 18px Arial';
             context.fillText(item.value, -context.measureText(item.value).width / 2, -10);
             context.font = '12px Arial';
             context.fillText('PHYSCOINS', -context.measureText('PHYSCOINS').width / 2, 10);
-            
+
             context.restore();
         });
     }
@@ -109,17 +108,17 @@ document.addEventListener('DOMContentLoaded', async () => {
         function animateSpin(time) {
             if (!startTime) startTime = time;
             const elapsed = time - startTime;
-    
+
             startAngle = easeOut(elapsed, 0, finalAngle, spinDuration);
             drawWheel();
-    
+
             if (elapsed < spinDuration) {
                 requestAnimationFrame(animateSpin);
             } else {
                 startAngle = finalAngle % (2 * Math.PI);
                 drawWheel();
                 alert(`Você ganhou: ${winningItem.text}`);
-                
+
                 updateCoins().then(() => {
                     isSpinning = false;
                 }).catch((error) => {
@@ -128,10 +127,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 });
             }
         }
-    
+
         requestAnimationFrame(animateSpin);
     }
-    
+
     function easeOut(t, b, c, d) {
         t /= d;
         t--;
@@ -143,14 +142,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             const now = new Date();
             const nextReset = new Date();
             nextReset.setHours(now.getHours() < 12 ? 12 : 24, 0, 0, 0);
-    
+
             const timeDiff = nextReset - now;
             const hours = Math.floor(timeDiff / (1000 * 60 * 60));
             const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
-    
+
             tvCountdownTimer.textContent = `Reinicia em: ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-    
+
             if (timeDiff <= 0) {
                 resetSpins();
                 setTimeout(updateCountdown, 1000);
@@ -158,43 +157,69 @@ document.addEventListener('DOMContentLoaded', async () => {
                 setTimeout(updateCountdown, 1000);
             }
         }
-    
-        async function resetSpins() {
-            if (!userId) return;
-        
-            const now = new Date();
-            const userDocRef = doc(firestore, "users", userId);
-        
-            try {
-                const userDoc = await getDoc(userDocRef);
-                const lastUpdate = userDoc.data().lastUpdate?.toDate();
-        
-                const currentHour = now.getHours();
-                let shouldUpdate = false;
-        
-                if (currentHour >= 12) {
-                    // Período de meio-dia até meia-noite
-                    shouldUpdate = !lastUpdate || lastUpdate.getHours() < 12;
-                } else {
-                    // Período de meia-noite até meio-dia
-                    shouldUpdate = !lastUpdate || lastUpdate.getHours() >= 12;
-                }
-        
-                if (shouldUpdate) {
-                    await updateDoc(userDocRef, { remainingSpins: 3, lastUpdate: now });
-                    console.log("Tentativas restantes atualizadas para 3.");
-                    remainingSpins = 3;
-                    tvRemainingSpins.textContent = `Tentativas restantes: ${remainingSpins}`;
-                }
-            } catch (error) {
-                console.error("Erro ao atualizar remainingSpins:", error);
-            }
-        }
-        
-    
+
         updateCountdown();
     }
-    
+
+    async function resetSpins() {
+        if (!userId) return;
+
+        const now = new Date();
+        const userDocRef = doc(firestore, "users", userId);
+
+        try {
+            const userDoc = await getDoc(userDocRef);
+            const lastUpdate = userDoc.data().lastUpdate?.toDate();
+
+            const currentHour = now.getHours();
+            let shouldUpdate = false;
+
+            if (currentHour >= 12) {
+                shouldUpdate = !lastUpdate || lastUpdate.getHours() < 12;
+            } else {
+                shouldUpdate = !lastUpdate || lastUpdate.getHours() >= 12;
+            }
+
+            if (shouldUpdate) {
+                await updateDoc(userDocRef, { remainingSpins: 3, lastUpdate: serverTimestamp() });
+                console.log("Tentativas restantes atualizadas para 3.");
+                remainingSpins = 3;
+                tvRemainingSpins.textContent = `Tentativas restantes: ${remainingSpins}`;
+            }
+        } catch (error) {
+            console.error("Erro ao atualizar remainingSpins:", error);
+        }
+    }
+
+    async function checkAndResetSpinsIfNecessary(lastUpdate) {
+        if (!userId || !lastUpdate) return;
+
+        const now = new Date();
+        const lastReset = lastUpdate.toDate();
+
+        if (shouldReset(now, lastReset)) {
+            await resetSpins();
+        }
+    }
+
+    function shouldReset(now, lastReset) {
+        const currentHour = now.getHours();
+
+        if (now.getDate() !== lastReset.getDate()) {
+            return true;
+        }
+
+        if (currentHour >= 12 && lastReset.getHours() < 12) {
+            return true;
+        }
+
+        if (currentHour < 12 && lastReset.getHours() >= 12) {
+            return true;
+        }
+
+        return false;
+    }
+
     spinBtn.addEventListener('click', spinWheel);
 
     btnBack.addEventListener('click', () => {

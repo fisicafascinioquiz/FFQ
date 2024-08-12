@@ -17,8 +17,6 @@ body {
     background: linear-gradient(to bottom, #6A1B9A, #283593);
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    overflow-y: auto; /* Permite rolagem vertical caso o conteúdo seja maior que a tela */
-    box-sizing: border-box;
 }
 
 .constraint-layout {
