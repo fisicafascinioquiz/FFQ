@@ -5,7 +5,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     background-color: #f4f4f4;
 }
 
@@ -17,6 +17,7 @@ body {
     background: linear-gradient(to bottom, #6A1B9A, #283593);
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    overflow-y: auto; /* Permite a rolagem vertical */
 }
 
 .constraint-layout {
@@ -24,25 +25,26 @@ body {
     flex-direction: column;
     align-items: center;
     margin-top: -20px;
-    height:50%;
+    height: auto;
 }
 
 .image-view {
-    width: 340px;
+    width: 100%;
+    max-width: 340px;
     height: auto;
     margin-top: 10px;
 }
 
 .title {
     font-family: 'Playfair Display', serif;
-    font-size: 40px;
+    font-size: 2.5em; /* Responsivo */
     color: white;
     text-align: center;
     margin-top: 20px;
 }
 
 .card-view {
-    width: calc(100% - 64px);
+    width: calc(100% - 40px); /* Reduzido para melhorar o espaçamento */
     margin-top: -10px;
     background: white;
     border-radius: 20px;
@@ -59,7 +61,7 @@ body {
 }
 
 .subtitle {
-    font-size: 24px;
+    font-size: 1.5em; /* Responsivo */
     font-weight: bold;
     text-align: center;
 }
@@ -80,7 +82,7 @@ body {
 .input-icon {
     position: absolute;
     left: 10px;
-    top: 0%;
+    top: 50%; /* Centraliza verticalmente */
     transform: translateY(-50%);
     width: 24px;
     height: 24px;
@@ -119,6 +121,54 @@ body {
     margin-bottom: 10px;
     color: #000;
 }
+
+/* Media Queries para responsividade */
+@media (max-width: 600px) {
+    .title {
+        font-size: 2em;
+    }
+
+    .subtitle {
+        font-size: 1.25em;
+    }
+
+    .input-text {
+        width: calc(100% - 30px);
+        padding: 10px 10px 10px 35px;
+    }
+
+    .btn {
+        width: calc(100% - 15px);
+    }
+
+    .terms-text {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 400px) {
+    .title {
+        font-size: 1.5em;
+    }
+
+    .subtitle {
+        font-size: 1em;
+    }
+
+    .input-text {
+        width: calc(100% - 20px);
+        padding: 10px 10px 10px 30px;
+    }
+
+    .btn {
+        width: calc(100% - 10px);
+    }
+
+    .terms-text {
+        font-size: 10px;
+    }
+}
+
 
 /*main*/
 body {
@@ -176,7 +226,7 @@ body {
     padding: 16px;
     background-color: #bebebe; /* Este valor estava diferente */
     overflow-y: auto;
-    max-height: 50%;
+    max-height: 53%;
 }
 
 .bottom-bar {
