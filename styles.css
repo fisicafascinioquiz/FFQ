@@ -470,17 +470,20 @@ h3 {
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 0 auto; /* Center the container */
 }
 
 .header {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
+    flex-wrap: wrap; /* Allow items to wrap */
 }
 
 .timer-container, .question-counter-container {
     display: flex;
     align-items: center;
+    margin-bottom: 10px; /* Add margin to avoid overlap */
 }
 
 .timer, .question-counter {
@@ -510,12 +513,14 @@ h3 {
 
 .question-section {
     margin-bottom: 20px;
+    word-wrap: break-word; /* Allow long words to break */
 }
 
 .question {
     font-size: 24px;
     text-align: center;
     margin-bottom: 20px;
+    overflow-wrap: break-word; /* Allow long text to break */
 }
 
 .question-image {
@@ -544,6 +549,7 @@ h3 {
     display: flex;
     justify-content: space-between;
     margin: 20px 0;
+    flex-wrap: wrap; /* Allow items to wrap */
 }
 
 .control-btn {
@@ -554,6 +560,7 @@ h3 {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    margin-bottom: 10px; /* Add margin to avoid overlap */
 }
 
 .control-btn:hover {
@@ -563,6 +570,7 @@ h3 {
 .navigation-section {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap; /* Allow items to wrap */
 }
 
 .nav-btn {
@@ -573,6 +581,7 @@ h3 {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    margin-bottom: 10px; /* Add margin to avoid overlap */
 }
 
 .nav-btn2 {
@@ -583,6 +592,7 @@ h3 {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    margin-bottom: 10px; /* Add margin to avoid overlap */
 }
 
 .nav-btn:hover {
@@ -601,6 +611,22 @@ h3 {
     justify-content: center;
     align-items: center;
 }
+
+/* Media queries for responsiveness */
+@media (max-width: 600px) {
+    .question {
+        font-size: 20px;
+    }
+    .timer, .question-counter {
+        font-size: 16px;
+        padding: 8px;
+    }
+    .control-btn, .nav-btn, .nav-btn2 {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+}
+
 
 
 /*result*/
