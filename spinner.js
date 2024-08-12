@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const userDoc = await getDoc(userDocRef);
         if (userDoc.exists()) {
             remainingSpins = userDoc.data().remainingSpins || 0;
+            lastUpdate = userDoc.data().lastUpdate || null;
             tvRemainingSpins.textContent = `Tentativas restantes: ${remainingSpins}`;
         } else {
             console.log("Documento de usuário não encontrado.");
@@ -46,7 +47,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             userId = user.uid;
             await fetchRemainingSpins();
             drawWheel();
-            startCountdownTimer(); // Iniciar o cronômetro
+            startCountdownTimer();
         } else {
             console.log("Nenhum usuário autenticado.");
         }
@@ -152,10 +153,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     
             if (timeDiff <= 0) {
                 resetSpins();
-                // Após a redefinição, agendar a próxima atualização do cronômetro
-                setTimeout(updateCountdown, 1000); 
+                setTimeout(updateCountdown, 1000);
             } else {
-                // Atualizar o cronômetro a cada segundo enquanto não zera
                 setTimeout(updateCountdown, 1000);
             }
         }
@@ -165,25 +164,36 @@ document.addEventListener('DOMContentLoaded', async () => {
     
             const now = new Date();
             const userDocRef = doc(firestore, "users", userId);
-    
+            const currentHour = now.getHours();
+
             try {
-                await updateDoc(userDocRef, { remainingSpins: 3 });
-                console.log("Tentativas restantes atualizadas para 3.");
-                remainingSpins = 3;
-                tvRemainingSpins.textContent = `Tentativas restantes: ${remainingSpins}`;
+                const userDoc = await getDoc(userDocRef);
+                const lastUpdate = userDoc.data().lastUpdate?.toDate();
+
+                let shouldUpdate = false;
+                if (currentHour < 12) {
+                    shouldUpdate = !lastUpdate || lastUpdate.getHours() >= 12;
+                } else {
+                    shouldUpdate = !lastUpdate || lastUpdate.getHours() < 12;
+                }
+
+                if (shouldUpdate) {
+                    await updateDoc(userDocRef, { remainingSpins: 3, lastUpdate: now });
+                    console.log("Tentativas restantes atualizadas para 3.");
+                    remainingSpins = 3;
+                    tvRemainingSpins.textContent = `Tentativas restantes: ${remainingSpins}`;
+                }
             } catch (error) {
                 console.error("Erro ao atualizar remainingSpins:", error);
             }
         }
     
-        // Iniciar o cronômetro imediatamente
         updateCountdown();
     }
     
-
     spinBtn.addEventListener('click', spinWheel);
 
-    btnback.addEventListener('click', () => {
+    btnBack.addEventListener('click', () => {
         window.location.href = 'main.html';
     });
 });
