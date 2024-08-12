@@ -105,3 +105,45 @@ async function saveUserPreference(userId, needsAdaptedActivities) {
         alert("Erro ao salvar preferência.");
     }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const inviteFriendsBtn = document.getElementById('inviteFriendsBtn');
+
+    inviteFriendsBtn.addEventListener('click', async () => {
+        await shareApp(firestore);
+    });
+});
+
+async function shareApp(firestore) {
+    try {
+        // Acessar o Firestore para obter a mensagem de compartilhamento
+        const messageDocRef = doc(firestore, "messages", "A4IzCUpk1AtMiYupUjxV", "shareMessage", "PkjwzT2BQcrX02ZXt3gQ");
+        const messageDoc = await getDoc(messageDocRef);
+
+        if (messageDoc.exists()) {
+            const message = messageDoc.get('message');
+
+            // Verificar se a API Web Share está disponível
+            if (navigator.share) {
+                // Utilizar a API Web Share para compartilhar a mensagem
+                navigator.share({
+                    title: 'Física Fascínio Quiz',
+                    text: message,
+                }).catch((error) => console.error('Erro ao compartilhar: ', error));
+            } else {
+                // Fallback: copiar a mensagem para a área de transferência e alertar o usuário
+                navigator.clipboard.writeText(message)
+                    .then(() => {
+                        alert("Mensagem copiada para a área de transferência. Cole-a no seu app de mensagens para compartilhar.");
+                    })
+                    .catch((error) => console.error('Erro ao copiar a mensagem: ', error));
+            }
+        } else {
+            console.log("Documento shareMessage não encontrado");
+            alert("Desculpe, não foi possível carregar a mensagem de compartilhamento.");
+        }
+    } catch (error) {
+        console.error("Erro ao acessar o Firestore: ", error);
+        alert("Erro ao acessar a mensagem de compartilhamento.");
+    }
+}
