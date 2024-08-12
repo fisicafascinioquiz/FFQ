@@ -171,6 +171,7 @@ body {
     padding: 16px;
     background-color: #bebebe; /* Este valor estava diferente */
     overflow-y: auto;
+    max-height: 50vh;
 }
 
 .bottom-bar {
