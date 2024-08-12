@@ -142,46 +142,44 @@ document.addEventListener('DOMContentLoaded', async () => {
             const now = new Date();
             const nextReset = new Date();
             nextReset.setHours(now.getHours() < 12 ? 12 : 24, 0, 0, 0);
-
+    
             const timeDiff = nextReset - now;
             const hours = Math.floor(timeDiff / (1000 * 60 * 60));
             const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
-
+    
             tvCountdownTimer.textContent = `Reinicia em: ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-
+    
             if (timeDiff <= 0) {
                 resetSpins();
-                updateCountdown(); // Atualizar o cronômetro imediatamente após o reset
+                // Após a redefinição, agendar a próxima atualização do cronômetro
+                setTimeout(updateCountdown, 1000); 
+            } else {
+                // Atualizar o cronômetro a cada segundo enquanto não zera
+                setTimeout(updateCountdown, 1000);
             }
         }
-
-        function resetSpins() {
+    
+        async function resetSpins() {
             if (!userId) return;
-
+    
             const now = new Date();
-            const lastResetDate = new Date(lastUpdate || 0);
-
-            if (now.getDate() !== lastResetDate.getDate() || now.getHours() < 12) {
-                lastUpdate = now;
-
-                // Atualizar remainingSpins no Firestore
-                const userDocRef = doc(firestore, "users", userId);
-                updateDoc(userDocRef, { remainingSpins: 3 })
-                    .then(() => {
-                        console.log("Tentativas restantes atualizadas para 3.");
-                        fetchRemainingSpins(); // Atualizar a tela após o reset
-                    })
-                    .catch((error) => {
-                        console.error("Erro ao atualizar remainingSpins:", error);
-                    });
+            const userDocRef = doc(firestore, "users", userId);
+    
+            try {
+                await updateDoc(userDocRef, { remainingSpins: 3 });
+                console.log("Tentativas restantes atualizadas para 3.");
+                remainingSpins = 3;
+                tvRemainingSpins.textContent = `Tentativas restantes: ${remainingSpins}`;
+            } catch (error) {
+                console.error("Erro ao atualizar remainingSpins:", error);
             }
         }
-
-        // Atualizar o cronômetro a cada segundo
+    
+        // Iniciar o cronômetro imediatamente
         updateCountdown();
-        setInterval(updateCountdown, 1000);
     }
+    
 
     spinBtn.addEventListener('click', spinWheel);
 

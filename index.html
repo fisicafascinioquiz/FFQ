@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,11 +7,18 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="app"></div>
+    <div class="nested-scroll">
+        <div class="constraint-layout">
+        <div id="splash-screen">
+        <img id="imageintro" src="images/logo6.png" alt="Logo">
+        <p id="textintro">Física Fascínio Quiz</p>
+    </div>
+    <div id="app" style="display: none;"></div>
     <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-firestore.js"></script>
     <script src="firebase-config.js"></script>
     <script src="main.js"></script>
+    <script src="splash.js"></script>
 </body>
 </html>

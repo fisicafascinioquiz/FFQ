@@ -61,10 +61,15 @@
                     await signInWithEmailAndPassword(auth, email, password);
                     window.location.href = 'main.html';
                 } catch (error) {
-                    if (error.code === 'auth/invalid-email' || error.code === 'auth/wrong-password') {
-                        alert("Por favor, insira email e/ou senha");
+                    if (error.code === 'auth/invalid-login-credentials') {
+                        alert("Email e/ou senha incorretos! Verifique e tente novamente.");
                     } else {
-                        alert("Erro de login: " + error.message);
+    
+                    }
+                    if (error.code === 'auth/invalid-email') {
+                        alert("Insira seu email e senha.");
+                    } else {
+                       
                     }
                 }
             });
