@@ -86,6 +86,7 @@ body {
     transform: translateY(-50%);
     width: 24px;
     height: 24px;
+    padding: -5px;
 }
 
 .input-text {
@@ -226,7 +227,7 @@ body {
     padding: 16px;
     background-color: #bebebe; /* Este valor estava diferente */
     overflow-y: auto;
-    max-height: 53%;
+    max-height: 55%;
 }
 
 .bottom-bar {
