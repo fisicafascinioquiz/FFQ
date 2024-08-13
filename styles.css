@@ -86,7 +86,6 @@ body {
     transform: translateY(-50%);
     width: 24px;
     height: 24px;
-    padding: -5px;
 }
 
 .input-text {
@@ -94,6 +93,7 @@ body {
     padding: 10px 10px 10px 40px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    padding-left: 40px;
 }
 
 .btn {
