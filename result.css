@@ -1,0 +1,163 @@
+/* Container Styles */
+.container {
+    width: 90%;
+    max-width: 600px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 20px 0;
+    box-sizing: border-box;
+}
+
+.card-view {
+    width: 100%;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Image View Styles */
+.image-view {
+    width: 80px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+/* Text View Styles */
+.text-view {
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+
+.subtitle {
+    font-size: 1.125rem;
+    font-weight: 300;
+    color: #6A1B9A;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* Divider Styles */
+.divider {
+    width: 100px;
+    height: 5px;
+    background: linear-gradient(to right, #6A1B9A, #283593);
+    margin: 20px 0;
+}
+
+/* Coins Styles */
+.coins {
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    font-size: 2.875rem;
+    color: #6A1B9A;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+}
+
+.coins .icon {
+    margin-right: 10px;
+}
+
+/* Button Styles */
+.btn {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 16px;
+    box-sizing: border-box;
+}
+
+.btn-orange {
+    background: #EF6C00;
+}
+
+.btn-orange:hover {
+    background: #D55800;
+}
+
+/* Button Container Styles */
+.button-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 24px;
+}
+
+.button {
+    width: 45%;
+    height: 51px;
+    border: none;
+    border-radius: 5px;
+    color: #ffffff;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+#shareBtn {
+    background-color: #007bff;
+    padding-left: 20px;
+}
+
+#restartBtn {
+    background-color: #ff9800;
+}
+
+#shareBtn .icon, #restartBtn .icon {
+    margin-right: 10px;
+    filter: invert(1);
+}
+
+/* Media Queries for Smaller Devices */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    .button-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .image-view {
+        width: 60px;
+    }
+
+    .text-view.score {
+        font-size: 2rem;
+    }
+
+    .coins {
+        font-size: 2rem;
+    }
+    
+    .subtitle {
+        font-size: 1rem;
+    }
+}

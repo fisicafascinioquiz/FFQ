@@ -1,0 +1,88 @@
+/* Global Style for Scrollable Body */
+.needscrol {
+    height: 100vh;
+    overflow-y: auto;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container Style */
+.container {
+    width: 50%; /* Set width to 50% for a balanced layout */
+    max-width: 600px; /* Maximum width for larger screens */
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin: 20px auto; /* Center the container and add space on top and bottom */
+}
+
+/* Profile Image Container */
+.profile-image-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Profile Image */
+.profile-image {
+    width: 136px;
+    height: 131px;
+    border-radius: 50%;
+    border: 2px solid #000000;
+}
+
+/* Version Info Style */
+.version-info {
+    text-align: center;
+    color: #000;
+    margin-bottom: 20px;
+}
+
+/* Heading Style */
+h3 {
+    color: #000;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+/* Message Box Style */
+.message-box {
+    background-color: #e0e0e0;
+    padding: 15px;
+    margin-top: 8px;
+    border-radius: 5px;
+    color: #000;
+    word-wrap: break-word;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .container {
+        width: 70%; /* Adjust container width for medium screens */
+    }
+
+    .profile-image {
+        width: 120px;
+        height: 115px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        width: 90%; /* Adjust container width for smaller screens */
+    }
+
+    .profile-image {
+        width: 100px;
+        height: 95px;
+    }
+
+    h3 {
+        font-size: 14px; /* Adjust font size for smaller screens */
+    }
+
+    .message-box {
+        padding: 10px;
+    }
+}

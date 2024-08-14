@@ -1,5 +1,5 @@
 import { auth, firestore } from './firebase-config.js';
-import { doc, getDoc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+import { doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
 
 document.addEventListener('DOMContentLoaded', async () => {
     const canvas = document.getElementById('wheelCanvas');
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (userDoc.exists()) {
             remainingSpins = userDoc.data().remainingSpins || 0;
             tvRemainingSpins.textContent = `Tentativas restantes: ${remainingSpins}`;
-            await checkAndResetSpinsIfNecessary(userDoc.data().lastUpdate);
+            checkAndResetSpinsIfNecessary();
         } else {
             console.log("Documento de usuário não encontrado.");
         }
@@ -51,6 +51,45 @@ document.addEventListener('DOMContentLoaded', async () => {
             console.log("Nenhum usuário autenticado.");
         }
     });
+
+    function checkAndResetSpinsIfNecessary() {
+        const lastResetTime = parseInt(localStorage.getItem('lastResetTime'), 10);
+        const now = new Date();
+        const currentTime = now.getTime();
+
+        if (isNaN(lastResetTime) || shouldReset(now, new Date(lastResetTime))) {
+            resetSpins(currentTime);
+        }
+    }
+
+    function shouldReset(now, lastReset) {
+        const currentHour = now.getHours();
+        const lastResetHour = lastReset.getHours();
+
+        const isDifferentPeriod = (currentHour < 12 && lastResetHour >= 12) || (currentHour >= 12 && lastResetHour < 12);
+        const isDifferentDay = now.getDate() !== lastReset.getDate();
+
+        console.log("Should Reset?", isDifferentPeriod || isDifferentDay);
+        console.log("Current Hour:", currentHour, "Last Reset Hour:", lastResetHour);
+
+        return isDifferentPeriod || isDifferentDay;
+    }
+
+    async function resetSpins(currentTime) {
+        remainingSpins = 3;
+        localStorage.setItem('lastResetTime', currentTime);
+        tvRemainingSpins.textContent = `Tentativas restantes: ${remainingSpins}`;
+
+        if (!userId) return;
+
+        const userDocRef = doc(firestore, "users", userId);
+        try {
+            await updateDoc(userDocRef, { remainingSpins: 3 });
+            console.log("Tentativas restantes atualizadas para 3 no Firestore.");
+        } catch (error) {
+            console.error("Erro ao atualizar remainingSpins no Firestore:", error);
+        }
+    }
 
     function drawWheel() {
         context.clearRect(0, 0, canvas.width, canvas.height);
@@ -99,7 +138,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         let startTime = null;
 
         async function updateCoins() {
-            const userDocRef = doc(firestore, "users", userId);
             const userDoc = await getDoc(userDocRef);
             const currentCoins = userDoc.data().coins || 0;
             await updateDoc(userDocRef, { coins: currentCoins + winningItem.value });
@@ -159,65 +197,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         updateCountdown();
-    }
-
-    async function resetSpins() {
-        if (!userId) return;
-
-        const now = new Date();
-        const userDocRef = doc(firestore, "users", userId);
-
-        try {
-            const userDoc = await getDoc(userDocRef);
-            const lastUpdate = userDoc.data().lastUpdate?.toDate();
-
-            const currentHour = now.getHours();
-            let shouldUpdate = false;
-
-            if (currentHour >= 12) {
-                shouldUpdate = !lastUpdate || lastUpdate.getHours() < 12;
-            } else {
-                shouldUpdate = !lastUpdate || lastUpdate.getHours() >= 12;
-            }
-
-            if (shouldUpdate) {
-                await updateDoc(userDocRef, { remainingSpins: 3, lastUpdate: serverTimestamp() });
-                console.log("Tentativas restantes atualizadas para 3.");
-                remainingSpins = 3;
-                tvRemainingSpins.textContent = `Tentativas restantes: ${remainingSpins}`;
-            }
-        } catch (error) {
-            console.error("Erro ao atualizar remainingSpins:", error);
-        }
-    }
-
-    async function checkAndResetSpinsIfNecessary(lastUpdate) {
-        if (!userId || !lastUpdate) return;
-
-        const now = new Date();
-        const lastReset = lastUpdate.toDate();
-
-        if (shouldReset(now, lastReset)) {
-            await resetSpins();
-        }
-    }
-
-    function shouldReset(now, lastReset) {
-        const currentHour = now.getHours();
-
-        if (now.getDate() !== lastReset.getDate()) {
-            return true;
-        }
-
-        if (currentHour >= 12 && lastReset.getHours() < 12) {
-            return true;
-        }
-
-        if (currentHour < 12 && lastReset.getHours() >= 12) {
-            return true;
-        }
-
-        return false;
     }
 
     spinBtn.addEventListener('click', spinWheel);

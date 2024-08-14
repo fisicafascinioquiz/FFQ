@@ -1,0 +1,131 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #F5F5F5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.nested-scroll {
+    overflow-y: auto;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to bottom, #6A1B9A, #283593);
+}
+
+.constraint-layout {
+    max-width: 400px;
+    width: 100%;
+    padding: 20px;
+}
+
+.card-view {
+    background-color: #FFF;
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+}
+
+.card-content {
+    text-align: center;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.coins-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+.coin-icon {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.input-container {
+    position: relative;
+    margin-top: 16px;
+    width: 100%;
+}
+
+.input-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+}
+
+.input-text {
+    width: calc(100% - 40px); /* Ajusta a largura para não ultrapassar o card */
+    padding: 10px 10px 10px 40px; /* Padding para deixar espaço para o ícone */
+    border: 1px solid #CCC;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #333;
+    outline: none;
+}
+
+.input-text:focus {
+    border-color: #6A1B9A;
+}
+
+.coins {
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    font-size: 46px;
+    color: #6A1B9A;
+}
+
+.subtitle {
+    font-size: 18px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    color: #6A1B9A;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.divider {
+    width: 100px;
+    height: 5px;
+    background: linear-gradient(to right, #6A1B9A, #283593);
+    margin: 10px 0;
+}
+
+.btn {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    margin-top: 16px;
+}
+
+.btn-orange {
+    background: #EF6C00;
+}
+
+.btn-orange:hover {
+    background: #D55800;
+}
