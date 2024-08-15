@@ -443,7 +443,7 @@
     "orientation": "any",
     "scope": "/",
     "short_name": "Física Fascínio Quiz",
-    "start_url": "https://fisicafascinioquiz.github.io/FFQ/",
+    "start_url": "/FFQ/",
     "theme_color": "#283593",
     "lang": "gu",
     "categories": [
