@@ -1,0 +1,16 @@
+{
+    "background_color": "#6a1b9a",
+    "display": "standalone",
+    "name": "Física Fascínio Quiz",
+    "orientation": "any",
+    "scope": "/",
+    "short_name": "Física Fascínio Quiz",
+    "start_url": "/",
+    "theme_color": "#283593",
+    "lang": "gu",
+    "categories": [
+      "education",
+      "entertainment",
+      "games"
+    ]
+  }
