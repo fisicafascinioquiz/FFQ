@@ -3,9 +3,9 @@
   "display": "standalone",
   "name": "Física Fascínio Quiz",
   "orientation": "any",
-  "scope": "/",
+  "scope": "/FFQ/",
   "short_name": "Física Fascínio Quiz",
-  "start_url": "/",
+  "start_url": "/FFQ/",
   "theme_color": "#283593",
   "lang": "gu",
   "categories": [
