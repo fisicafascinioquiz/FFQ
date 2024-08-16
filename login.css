@@ -28,10 +28,10 @@ body {
 }
 
 .image-view {
-    width: 100%;
+    width: 70%;
     max-width: 340px;
-    height: auto;
-    margin-top: 10px;
+    height: 70%;
+    margin-top: 5px;
 }
 
 .title {
@@ -39,7 +39,7 @@ body {
     font-size: 2.5em;
     color: white;
     text-align: center;
-    margin-top: -30px; /* Reduz o margin-top para elevar o título */
+    margin-top: -50px; /* Reduz o margin-top para elevar o título */
     z-index: 2; /* Assegura que o título fique acima do card branco */
     position: relative;
 }
