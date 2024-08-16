@@ -4,7 +4,7 @@ body {
     padding: 0;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start; /* Alinha os itens no topo */
     min-height: 100vh;
     background-color: #f4f4f4;
 }
@@ -25,13 +25,16 @@ body {
     align-items: center;
     width: 100%;
     height: auto;
+    position: relative; /* Permite o posicionamento absoluto do título */
 }
 
 .image-view {
-    width: 60%; /* Diminui a largura da imagem */
+    width: 60%;
     max-width: 300px;
     height: auto;
-    margin-top: 0; /* Remove o espaçamento superior */
+    margin-top: 0; /* Garante que a imagem fique no topo */
+    position: absolute;
+    top: 0; /* Posiciona a imagem no topo do contêiner */
 }
 
 .title {
@@ -39,8 +42,8 @@ body {
     font-size: 2.5em;
     color: white;
     text-align: center;
-    margin-top: -60px; /* Eleva mais o título */
-    z-index: 2; /* Assegura que o título fique acima do card branco */
+    margin-top: 200px; /* Ajusta a posição do título para centralizá-lo */
+    z-index: 2;
     position: relative;
 }
 
@@ -51,8 +54,8 @@ body {
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     padding: 20px;
     position: relative;
-    top: -40px; /* Ajusta o card para compensar a elevação do título */
-    z-index: 0; /* Mantém o card abaixo do título */
+    top: 20px; /* Ajusta a posição do card */
+    z-index: 1;
 }
 
 .card-content {
@@ -127,7 +130,7 @@ body {
 @media (max-width: 600px) {
     .title {
         font-size: 2em;
-        margin-top: -50px; /* Ajuste adicional para iPhone */
+        margin-top: 180px; /* Ajuste adicional para telas menores */
     }
 
     .subtitle {
@@ -146,7 +149,7 @@ body {
 @media (max-width: 400px) {
     .title {
         font-size: 1.5em;
-        margin-top: -50px;
+        margin-top: 160px; /* Ajuste adicional para telas ainda menores */
     }
 
     .subtitle {
