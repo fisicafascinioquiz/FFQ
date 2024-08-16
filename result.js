@@ -51,6 +51,28 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 });
 
+function shareApp() {
+    // Exemplo de texto para compartilhar
+    const score = document.getElementById('score').innerText;
+    const earnedCoins = document.getElementById('earnedCoins').innerText;
+    const shareText = `Acabei o quiz com ${score} pontos! Ganhei ${earnedCoins} PhysiCoins!`;
+
+    if (navigator.share) {
+        navigator.share({
+            title: 'Compartilhar Pontuação',
+            text: shareText,
+            url: window.location.href // opcional: compartilha a URL atual junto com o texto
+        }).then(() => {
+            console.log('Conteúdo compartilhado com sucesso');
+        }).catch((error) => {
+            console.error('Erro ao compartilhar:', error);
+        });
+    } else {
+        // Fallback caso o navegador não suporte a API de compartilhamento
+        alert('O compartilhamento não é suportado neste navegador.');
+    }
+}
+
 function calculateAndDisplayResults(correctAnswers, totalQuestions, pointsPerQuestion) {
     // Certifique-se de que essa linha define o texto corretamente
     console.log("Valor correto de correctAnswers antes de exibir:", correctAnswers);
