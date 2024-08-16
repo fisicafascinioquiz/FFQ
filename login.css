@@ -28,10 +28,10 @@ body {
 }
 
 .image-view {
-    width: 70%;
-    max-width: 340px;
-    height: 70%;
-    margin-top: 5px;
+    width: 60%; /* Diminui a largura da imagem */
+    max-width: 300px;
+    height: auto;
+    margin-top: 0; /* Remove o espaçamento superior */
 }
 
 .title {
@@ -39,7 +39,7 @@ body {
     font-size: 2.5em;
     color: white;
     text-align: center;
-    margin-top: -50px; /* Reduz o margin-top para elevar o título */
+    margin-top: -60px; /* Eleva mais o título */
     z-index: 2; /* Assegura que o título fique acima do card branco */
     position: relative;
 }
@@ -51,7 +51,7 @@ body {
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     padding: 20px;
     position: relative;
-    top: -30px; /* Eleva o card um pouco mais para compensar a elevação do título */
+    top: -40px; /* Ajusta o card para compensar a elevação do título */
     z-index: 0; /* Mantém o card abaixo do título */
 }
 
@@ -90,8 +90,8 @@ body {
 }
 
 .input-text {
-    width: calc(100% - 50px); /* Ajusta a largura para adicionar mais espaço ao ícone */
-    padding: 10px 10px 10px 50px; /* Aumenta o padding-left para dar mais espaço entre o ícone e o texto */
+    width: calc(100% - 50px);
+    padding: 10px 10px 10px 50px;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
@@ -127,7 +127,7 @@ body {
 @media (max-width: 600px) {
     .title {
         font-size: 2em;
-        margin-top: -40px; /* Ajuste adicional para iPhone */
+        margin-top: -50px; /* Ajuste adicional para iPhone */
     }
 
     .subtitle {
@@ -135,7 +135,7 @@ body {
     }
 
     .input-text {
-        padding: 10px 10px 10px 45px; /* Ajusta para telas menores também */
+        padding: 10px 10px 10px 45px;
     }
 
     .terms-text {
@@ -146,7 +146,7 @@ body {
 @media (max-width: 400px) {
     .title {
         font-size: 1.5em;
-        margin-top: -40px;
+        margin-top: -50px;
     }
 
     .subtitle {
@@ -154,7 +154,7 @@ body {
     }
 
     .input-text {
-        padding: 10px 10px 10px 40px; /* Mantém o espaçamento também em telas pequenas */
+        padding: 10px 10px 10px 40px;
     }
 
     .terms-text {
