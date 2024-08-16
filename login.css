@@ -4,13 +4,14 @@ body {
     padding: 0;
     display: flex;
     justify-content: center;
-    align-items: flex-start; /* Alinha os itens no topo */
+    align-items: center;
     min-height: 100vh;
     background-color: #f4f4f4;
 }
 
 .nested-scroll {
-    width: 90%;
+    width: 100%;
+    height: 100%;
     max-width: 600px;
     padding: 20px;
     background: linear-gradient(to bottom, #6A1B9A, #283593);
@@ -23,18 +24,14 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
     height: auto;
-    position: relative; /* Permite o posicionamento absoluto do título */
 }
 
 .image-view {
-    width: 60%;
-    max-width: 300px;
+    width: 100%;
+    max-width: 340px;
     height: auto;
-    margin-top: 0; /* Garante que a imagem fique no topo */
-    position: absolute;
-    top: 0; /* Posiciona a imagem no topo do contêiner */
+    margin-top: 10px;
 }
 
 .title {
@@ -42,20 +39,18 @@ body {
     font-size: 2.5em;
     color: white;
     text-align: center;
-    margin-top: 200px; /* Ajusta a posição do título para centralizá-lo */
-    z-index: 2;
-    position: relative;
+    margin-top: -5px;
 }
 
 .card-view {
-    width: 100%;
+    width: calc(100% - 10px);
+    margin-top: -10px;
     background: white;
     border-radius: 20px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     padding: 20px;
     position: relative;
-    top: 20px; /* Ajusta a posição do card */
-    z-index: 1;
+    top: -20px;
 }
 
 .card-content {
@@ -93,19 +88,20 @@ body {
 }
 
 .input-text {
-    width: calc(100% - 50px);
-    padding: 10px 10px 10px 50px;
+    width: calc(100% - 40px);
+    padding: 10px 10px 10px 40px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    padding-left: 40px;
 }
 
 .btn {
-    width: 100%;
+    width: calc(100% - 20px);
     padding: 10px;
     border: none;
     border-radius: 5px;
     color: white;
-    margin: 10px 0;
+    margin: 10px;
     cursor: pointer;
 }
 
@@ -118,7 +114,7 @@ body {
 }
 
 .terms-text {
-    width: 100%;
+    width: calc(100% - 20px);
     text-align: center;
     font-size: 14px;
     margin-top: 10px;
@@ -126,11 +122,12 @@ body {
     color: #000;
 }
 
+
+
 /* Media Queries for Responsiveness */
 @media (max-width: 600px) {
     .title {
         font-size: 2em;
-        margin-top: 180px; /* Ajuste adicional para telas menores */
     }
 
     .subtitle {
@@ -138,10 +135,16 @@ body {
     }
 
     .input-text {
-        padding: 10px 10px 10px 45px;
+        width: calc(100% - 30px);
+        padding: 10px 10px 10px 35px;
     }
 
-    .terms-text {
+    .btn {
+        width: calc(100% - 15px);
+    }
+
+    .terms-text,
+    .forgot-password {
         font-size: 12px;
     }
 }
@@ -149,7 +152,6 @@ body {
 @media (max-width: 400px) {
     .title {
         font-size: 1.5em;
-        margin-top: 160px; /* Ajuste adicional para telas ainda menores */
     }
 
     .subtitle {
@@ -157,10 +159,16 @@ body {
     }
 
     .input-text {
-        padding: 10px 10px 10px 40px;
+        width: calc(100% - 20px);
+        padding: 10px 10px 10px 30px;
     }
 
-    .terms-text {
+    .btn {
+        width: calc(100% - 10px);
+    }
+
+    .terms-text,
+    .forgot-password {
         font-size: 10px;
     }
 }
