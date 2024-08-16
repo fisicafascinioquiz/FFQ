@@ -149,8 +149,7 @@ body {
     }
 
     .input-text {
-        width: calc(100% - 20px);
-        padding: 10px 10px 10px 30px;
+        padding: 10px 10px 10px 40px; /* Mantém o espaçamento também em telas pequenas */
     }
 
     .btn {
