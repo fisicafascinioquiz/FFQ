@@ -39,7 +39,9 @@ body {
     font-size: 2.5em;
     color: white;
     text-align: center;
-    margin-top: -5px;
+    margin-top: -15px; /* Reduz o margin-top para elevar o título */
+    z-index: 1; /* Assegura que o título fique acima do card branco */
+    position: relative;
 }
 
 .card-view {
@@ -49,7 +51,8 @@ body {
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     padding: 20px;
     position: relative;
-    top: -20px;
+    top: -30px; /* Eleva o card um pouco mais para compensar a elevação do título */
+    z-index: 0; /* Mantém o card abaixo do título */
 }
 
 .card-content {
@@ -87,8 +90,8 @@ body {
 }
 
 .input-text {
-    width: 100%;
-    padding: 10px 10px 10px 40px;
+    width: calc(100% - 50px); /* Ajusta a largura para adicionar mais espaço ao ícone */
+    padding: 10px 10px 10px 50px; /* Aumenta o padding-left para dar mais espaço entre o ícone e o texto */
     border: 1px solid #ccc;
     border-radius: 5px;
 }
@@ -131,7 +134,7 @@ body {
     }
 
     .input-text {
-        padding: 10px 10px 10px 35px;
+        padding: 10px 10px 10px 45px; /* Ajusta para telas menores também */
     }
 
     .terms-text {
@@ -149,7 +152,7 @@ body {
     }
 
     .input-text {
-        padding: 10px 10px 10px 30px;
+        padding: 10px 10px 10px 40px; /* Mantém o espaçamento também em telas pequenas */
     }
 
     .terms-text {
