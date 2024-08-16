@@ -88,8 +88,8 @@ body {
 }
 
 .input-text {
-    width: calc(100% - 40px);
-    padding: 10px 10px 10px 40px;
+    width: calc(100% - 50px); /* Ajusta a largura para adicionar mais espaço ao ícone */
+    padding: 10px 10px 10px 50px;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
@@ -128,10 +128,8 @@ body {
     }
 
     .input-text {
-        width: calc(100% - 30px);
-        padding: 10px 10px 10px 35px;
+        padding: 10px 10px 10px 45px; /* Ajusta para telas menores também */
     }
-
     .btn {
         width: calc(100% - 15px);
     }
