@@ -121,6 +121,7 @@ body {
 @media (max-width: 600px) {
     .title {
         font-size: 2em;
+        margin-top: -40px; /* Ajuste adicional para iPhone */
     }
 
     .subtitle {

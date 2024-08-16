@@ -39,8 +39,8 @@ body {
     font-size: 2.5em;
     color: white;
     text-align: center;
-    margin-top: -15px; /* Reduz o margin-top para elevar o título */
-    z-index: 1; /* Assegura que o título fique acima do card branco */
+    margin-top: -30px; /* Reduz o margin-top para elevar o título */
+    z-index: 2; /* Assegura que o título fique acima do card branco */
     position: relative;
 }
 
@@ -127,6 +127,7 @@ body {
 @media (max-width: 600px) {
     .title {
         font-size: 2em;
+        margin-top: -40px; /* Ajuste adicional para iPhone */
     }
 
     .subtitle {
