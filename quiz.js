@@ -261,15 +261,19 @@ function showAudiencePoll() {
 
 function toggleFullscreenImage(imageUrl) {
     const fullscreenImageContainer = document.getElementById('fullscreenImage');
-    if (fullscreenImageContainer.style.display === 'none') {
-        fullscreenImageContainer.style.backgroundImage = `url(${imageUrl})`;
-        fullscreenImageContainer.style.display = 'flex';
-        disableQuizNavigationButtons();
+    
+    // Verifica se o contêiner está oculto
+    if (fullscreenImageContainer.style.display === 'none' || fullscreenImageContainer.style.display === '') {
+        fullscreenImageContainer.style.backgroundImage = `url(${imageUrl})`; // Define a imagem de fundo
+        fullscreenImageContainer.style.display = 'flex'; // Exibe o contêiner em modo flex para centralizar
+        disableQuizNavigationButtons(); // Desabilita botões de navegação do quiz (se necessário)
     } else {
-        fullscreenImageContainer.style.display = 'none';
-        enableQuizNavigationButtons();
+        fullscreenImageContainer.style.display = 'none'; // Oculta o contêiner
+        fullscreenImageContainer.style.backgroundImage = ''; // Limpa a imagem de fundo
+        enableQuizNavigationButtons(); // Reabilita botões de navegação do quiz (se necessário)
     }
 }
+
 
 function disableQuizNavigationButtons() {
     document.getElementById('quizBtn').disabled = true;
