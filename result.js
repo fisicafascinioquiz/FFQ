@@ -82,7 +82,7 @@ function calculateAndDisplayResults(correctAnswers, totalQuestions, pointsPerQue
 
     // Essa linha calcula os pontos e exibe no campo `earnedCoins`
     const points = correctAnswers * pointsPerQuestion;
-    document.getElementById('earnedCoins').innerHTML = `<img src="images/cronometro.png" alt="Dollar Icon" class="icon">${points}`;
+    document.getElementById('earnedCoins').innerHTML = `<img src="images/dollar.png" alt="Dollar Icon" class="icon">${points}`;
 
     // Atualiza as moedas do usuário no Firestore
     const user = auth.currentUser;
