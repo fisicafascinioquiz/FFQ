@@ -68,6 +68,19 @@ function shuffleArray(array) {
     }
 }
 
+
+function formatScientificNotation(text) {
+    // Regular expression to detect scientific notation patterns like 1,6x10^-19 or 1,6.10-19
+    const regex = /(\d+,\d+)([x.]\s?10)([-−^]?)(-?\d+)/gi;
+
+    // Replace the matched patterns with formatted HTML using <sup> for superscript
+    return text.replace(regex, (match, base, times, sign, exponent) => {
+        return `${base} × 10<sup>${exponent}</sup>`;
+    });
+}
+
+
+
 function setNextQuestion() {
     if (timer) {
         clearInterval(timer);
@@ -82,25 +95,27 @@ function setNextQuestion() {
     enableOptions();
 
     const question = questions[currentIndex];
+
+    // Format the question text with scientific notation
+    const formattedQuestionText = formatScientificNotation(question.question);
+    document.getElementById('question').innerHTML = formattedQuestionText;
+
+    // Format each option with scientific notation
     const options = shuffleOptions([
-        { id: 'option1', text: question.option1 },
-        { id: 'option2', text: question.option2 },
-        { id: 'option3', text: question.option3 },
-        { id: 'option4', text: question.option4 }
+        { id: 'option1', text: formatScientificNotation(question.option1) },
+        { id: 'option2', text: formatScientificNotation(question.option2) },
+        { id: 'option3', text: formatScientificNotation(question.option3) },
+        { id: 'option4', text: formatScientificNotation(question.option4) }
     ]);
 
-    document.getElementById('question').textContent = question.question;
-
-    // Limpar o conteúdo da seção de opções
     const optionsSection = document.getElementById('optionsSection');
     optionsSection.innerHTML = '';
 
-    // Inserir as opções embaralhadas no DOM e associar o evento de clique
     options.forEach(option => {
         const optionElement = document.createElement('div');
         optionElement.id = option.id;
         optionElement.className = 'option';
-        optionElement.textContent = option.text;
+        optionElement.innerHTML = option.text; // Use innerHTML to render HTML correctly
         optionElement.onclick = () => selectOption(option.text);
         optionsSection.appendChild(optionElement);
     });
@@ -117,6 +132,7 @@ function setNextQuestion() {
 
     startTimer();
 }
+
 
 
 function shuffleOptions(options) {
