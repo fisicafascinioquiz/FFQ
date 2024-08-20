@@ -197,6 +197,14 @@ body {
     border-radius: 10px;
 }
 
+.correct {
+    border: 3px solid green;
+}
+
+.incorrect {
+    border: 3px solid red;
+}
+
 /* Keyframes para a animação */
 @keyframes fadeIn {
     from {
@@ -223,4 +231,8 @@ body {
         font-size: 14px;
         padding: 10px;
     }
+}
+
+.smaller-text {
+    font-size: smaller;
 }

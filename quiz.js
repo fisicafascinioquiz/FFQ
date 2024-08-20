@@ -119,7 +119,13 @@ function nextQuestion() {
         const optionElement = document.createElement('div');
         optionElement.id = option.id;
         optionElement.className = 'option';
-        optionElement.innerHTML = option.text;
+        
+        if (isValidURL(option.text)) {
+            optionElement.innerHTML = `<img src="${option.text}" alt="Option Image" style="max-width: 100%; max-height: 150px;">`;
+        } else {
+            optionElement.innerHTML = option.text.replace(/([a-zA-Z])\^(\d+)/g, '$1<sup>$2</sup>'); // Aplica a formatação de expoentes
+        }
+
         optionElement.onclick = () => selectOption(option.text);
         optionsSection.appendChild(optionElement);
     });
@@ -137,7 +143,14 @@ function nextQuestion() {
     startTimer();
 }
 
-
+function isValidURL(string) {
+    try {
+        new URL(string);
+        return true;
+    } catch (_) {
+        return false;
+    }
+}
 
 function shuffleOptions(options) {
     shuffleArray(options); // Embaralha a ordem das opções
@@ -163,6 +176,8 @@ function selectOption(selectedOptionText) {
     clearInterval(timer);
     checkAnswer(selectedOptionText);
 }
+
+
 
 function stripHTML(text) {
     const div = document.createElement('div');
@@ -209,9 +224,17 @@ function highlightCorrectOption() {
     const correctAnswer = stripHTML(questions[currentIndex].answer.trim());
 
     document.querySelectorAll('.option').forEach(option => {
-        if (stripHTML(option.innerHTML.trim().split(' - ')[0]) === correctAnswer) {
-            option.style.backgroundColor = '#4CAF50'; // Destaca a opção correta em verde
-            console.log("Correct option highlighted:", option);
+        let optionText = stripHTML(option.innerHTML.trim().split(' - ')[0]);
+
+        if (option.querySelector('img')) {
+            const imgSrc = option.querySelector('img').getAttribute('src');
+            if (imgSrc === correctAnswer) {
+                option.style.backgroundColor = '#4CAF50'; // Highlight correct image option in green
+                console.log("Correct image option highlighted:", option);
+            }
+        } else if (optionText === correctAnswer) {
+            option.style.backgroundColor = '#4CAF50'; // Highlight correct text option in green
+            console.log("Correct text option highlighted:", option);
         }
     });
 }
@@ -220,18 +243,28 @@ function highlightIncorrectOption(selectedAnswer) {
     const correctAnswer = stripHTML(questions[currentIndex].answer.trim());
 
     document.querySelectorAll('.option').forEach(option => {
-        const optionText = stripHTML(option.innerHTML.trim().split(' - ')[0]);
-        if (optionText === selectedAnswer) {
-            option.style.backgroundColor = '#F44336'; // Destaca a opção incorreta em vermelho
-            console.log("Incorrect option highlighted:", option);
+        let optionText = stripHTML(option.innerHTML.trim().split(' - ')[0]);
+
+        if (option.querySelector('img')) {
+            const imgSrc = option.querySelector('img').getAttribute('src');
+            if (imgSrc === selectedAnswer) {
+                option.style.backgroundColor = '#F44336'; // Highlight incorrect image option in red
+                console.log("Incorrect image option highlighted:", option);
+            }
+            if (imgSrc === correctAnswer) {
+                option.style.backgroundColor = '#4CAF50'; // Highlight correct image option in green
+                console.log("Correct image option highlighted:", option);
+            }
+        } else if (optionText === selectedAnswer) {
+            option.style.backgroundColor = '#F44336'; // Highlight incorrect text option in red
+            console.log("Incorrect text option highlighted:", option);
         }
         if (optionText === correctAnswer) {
-            option.style.backgroundColor = '#4CAF50'; // Destaca a opção correta em verde
-            console.log("Correct option highlighted:", option);
+            option.style.backgroundColor = '#4CAF50'; // Highlight correct text option in green
+            console.log("Correct text option highlighted:", option);
         }
     });
 }
-
 
 
 function resetOptions() {
