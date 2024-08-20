@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (categoryId && subcategoryId) {
         await loadQuestions(categoryId, subcategoryId);
-        setNextQuestion();
+        nextQuestion();
     } else {
         alert("Erro: Parâmetros de categoria ou subcategoria ausentes.");
     }
@@ -84,7 +84,7 @@ function formatScientificNotation(text) {
 
 
 
-function setNextQuestion() {
+function nextQuestion() {
     if (timer) {
         clearInterval(timer);
     }
@@ -368,7 +368,7 @@ function setupButtonsClickListeners() {
     document.getElementById('nextBtn').addEventListener('click', function() {
         if (currentIndex < questions.length - 1) {
             currentIndex++;
-            setNextQuestion(); // Carregar a próxima pergunta
+            nextQuestion(); // Carregar a próxima pergunta
         } else {
             finishQuiz(); // Finalizar o quiz se não houver mais perguntas
         }
