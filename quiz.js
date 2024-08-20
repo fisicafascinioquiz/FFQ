@@ -12,7 +12,7 @@ let questionsCount = 0;
 let fiftyFiftyCount = 0;
 let audiencePollCount = 0;
 const MAX_FIFTY_FIFTY_COUNT = 3;
-const MAX_AUDIENCE_POLL_COUNT = 3;
+const MAX_AUDIENCE_POLL_COUNT = 50;
 
 document.addEventListener('DOMContentLoaded', async () => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -70,14 +70,14 @@ function shuffleArray(array) {
 
 
 function formatScientificNotation(text) {
-    // Regular expression to detect scientific notation patterns like 1,6x10^-19 or 1,6.10-19
-    const regex = /(\d+[,.]?\d*)[x.]10([-−]?\d+)/gi;
+    // Expressão regular para detectar padrões de notação científica
+    const regex = /(\d+[,.]?\d*)\s*[x×.]?\s*10\s*([-−]?\d+)/gi;
 
-    // Replace the matched patterns with formatted HTML using <sup> for superscript
+    // Substituir os padrões detectados pelo formato HTML com <sup> para sobrescrito
     return text.replace(regex, (match, base, exponent) => {
-        // Normalize the minus sign to a standard hyphen
+        // Normalizar o sinal de menos para um hífen padrão
         const normalizedExponent = exponent.replace('−', '-');
-        return `${base} × 10<sup>${normalizedExponent}</sup>`;
+        return `${base.replace(',', '.')} × 10<sup>${normalizedExponent}</sup>`;
     });
 }
 
@@ -99,8 +99,11 @@ function nextQuestion() {
 
     const question = questions[currentIndex];
 
-    const formattedQuestionText = formatScientificNotation(question.question);
-    document.getElementById('question').innerHTML = formattedQuestionText;
+    const formattedQuestionText = formatScientificNotation(question.question)
+    .replace(/\\n/g, '</p><p>') // Substitui \n por </p><p>
+    .replace(/([a-zA-Z])\^(\d+)/g, '$1<sup>$2</sup>');
+
+    document.getElementById('question').innerHTML = `<p>${formattedQuestionText}</p>`;
 
     const options = shuffleOptions([
         { id: 'option1', text: formatScientificNotation(question.option1) },
@@ -165,21 +168,24 @@ function stripHTML(text) {
     const div = document.createElement('div');
     div.innerHTML = text;
 
-    // Extrai o texto sem HTML
+    // Extract text without HTML
     let strippedText = div.textContent || div.innerText || '';
 
-    // Remover espaços em branco
+    // Remove whitespace
     strippedText = strippedText.replace(/\s+/g, '');
 
-    // Normalizar vírgulas para pontos
+    // Normalize commas to dots
     strippedText = strippedText.replace(/,/g, '.');
 
-    // Corrigir notações científicas de diferentes formatos para E notation
-    // Ex: 4.5×10^22, 4.5.10^22, 4.5×10-22, 4.5.10-22
+    // Normalize the special minus sign (U+2212) to the standard hyphen (U+002D)
+    strippedText = strippedText.replace(/−/g, '-');
+
+    // Correct scientific notation formats to E notation
     strippedText = strippedText.replace(/(\d+[,.]?\d*)[×.]10\^?([-−]?\d+)/g, '$1E$2');
 
     return strippedText;
 }
+
 
 function checkAnswer(selectedAnswer) {
     const correctAnswer = stripHTML(questions[currentIndex].answer.trim());
@@ -203,7 +209,7 @@ function highlightCorrectOption() {
     const correctAnswer = stripHTML(questions[currentIndex].answer.trim());
 
     document.querySelectorAll('.option').forEach(option => {
-        if (stripHTML(option.innerHTML.trim()) === correctAnswer) {
+        if (stripHTML(option.innerHTML.trim().split(' - ')[0]) === correctAnswer) {
             option.style.backgroundColor = '#4CAF50'; // Destaca a opção correta em verde
             console.log("Correct option highlighted:", option);
         }
@@ -214,7 +220,7 @@ function highlightIncorrectOption(selectedAnswer) {
     const correctAnswer = stripHTML(questions[currentIndex].answer.trim());
 
     document.querySelectorAll('.option').forEach(option => {
-        const optionText = stripHTML(option.innerHTML.trim());
+        const optionText = stripHTML(option.innerHTML.trim().split(' - ')[0]);
         if (optionText === selectedAnswer) {
             option.style.backgroundColor = '#F44336'; // Destaca a opção incorreta em vermelho
             console.log("Incorrect option highlighted:", option);
@@ -288,11 +294,11 @@ function useAudiencePoll() {
 function showAudiencePoll() {
     const options = Array.from(document.querySelectorAll('.option')).filter(option => option.style.display !== 'none');
     const correctAnswer = questions[currentIndex].answer;
-    const correctAnswerPercentage = Math.floor(Math.random() * 21) + 60; // Random between 60 and 80
+    const correctAnswerPercentage = Math.floor(Math.random() * 21) + 60; // Aleatório entre 60 e 80
     let remainingPercentage = 100 - correctAnswerPercentage;
 
     const percentages = options.map((option, index) => {
-        if (option.textContent === correctAnswer) {
+        if (stripHTML(option.innerHTML.trim()) === stripHTML(correctAnswer)) {
             return correctAnswerPercentage;
         }
         const percentage = Math.floor(Math.random() * (remainingPercentage / (options.length - index - 1)));
@@ -301,11 +307,16 @@ function showAudiencePoll() {
     });
 
     options.forEach((option, index) => {
-        option.textContent = `${option.textContent.split(' - ')[0]} - ${percentages[index]}%`;
-       
+        const optionText = option.innerHTML.trim().split(' - ')[0];
+        option.innerHTML = `${optionText} - ${percentages[index]}%`;
+
+        // Reaplica o listener de clique após a modificação do conteúdo
+        option.onclick = () => selectOption(option.innerHTML.trim().split(' - ')[0]);
     });
 
 }
+
+
 
 function toggleFullscreenImage(imageUrl) {
     const fullscreenImageContainer = document.getElementById('fullscreenImage');

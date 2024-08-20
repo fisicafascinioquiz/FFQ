@@ -84,7 +84,7 @@ body {
 
 .question {
     font-size: 24px;
-    text-align: center;
+    text-align: justify;
     margin-bottom: 20px;
     overflow-wrap: break-word; /* Allow long text to break */
     padding: 0 10px;
