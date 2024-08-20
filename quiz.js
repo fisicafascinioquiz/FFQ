@@ -71,13 +71,16 @@ function shuffleArray(array) {
 
 function formatScientificNotation(text) {
     // Regular expression to detect scientific notation patterns like 1,6x10^-19 or 1,6.10-19
-    const regex = /(\d+,\d+)([x.]\s?10)([-−^]?)(-?\d+)/gi;
+    const regex = /(\d+[,.]?\d*)[x.]10([-−]?\d+)/gi;
 
     // Replace the matched patterns with formatted HTML using <sup> for superscript
-    return text.replace(regex, (match, base, times, sign, exponent) => {
-        return `${base} × 10<sup>${exponent}</sup>`;
+    return text.replace(regex, (match, base, exponent) => {
+        // Normalize the minus sign to a standard hyphen
+        const normalizedExponent = exponent.replace('−', '-');
+        return `${base} × 10<sup>${normalizedExponent}</sup>`;
     });
 }
+
 
 
 
@@ -96,11 +99,9 @@ function setNextQuestion() {
 
     const question = questions[currentIndex];
 
-    // Format the question text with scientific notation
     const formattedQuestionText = formatScientificNotation(question.question);
     document.getElementById('question').innerHTML = formattedQuestionText;
 
-    // Format each option with scientific notation
     const options = shuffleOptions([
         { id: 'option1', text: formatScientificNotation(question.option1) },
         { id: 'option2', text: formatScientificNotation(question.option2) },
@@ -115,7 +116,7 @@ function setNextQuestion() {
         const optionElement = document.createElement('div');
         optionElement.id = option.id;
         optionElement.className = 'option';
-        optionElement.innerHTML = option.text; // Use innerHTML to render HTML correctly
+        optionElement.innerHTML = option.text;
         optionElement.onclick = () => selectOption(option.text);
         optionsSection.appendChild(optionElement);
     });
@@ -160,17 +161,38 @@ function selectOption(selectedOptionText) {
     checkAnswer(selectedOptionText);
 }
 
-function checkAnswer(selectedAnswer) {
-    const correctAnswer = questions[currentIndex].answer;
+function stripHTML(text) {
+    const div = document.createElement('div');
+    div.innerHTML = text;
 
-    // Comparar apenas o texto antes do "-"
-    const cleanSelectedAnswer = selectedAnswer ? selectedAnswer.split(' - ')[0] : null;
+    // Extrai o texto sem HTML
+    let strippedText = div.textContent || div.innerText || '';
+
+    // Remover espaços em branco
+    strippedText = strippedText.replace(/\s+/g, '');
+
+    // Normalizar vírgulas para pontos
+    strippedText = strippedText.replace(/,/g, '.');
+
+    // Corrigir notações científicas de diferentes formatos para E notation
+    // Ex: 4.5×10^22, 4.5.10^22, 4.5×10-22, 4.5.10-22
+    strippedText = strippedText.replace(/(\d+[,.]?\d*)[×.]10\^?([-−]?\d+)/g, '$1E$2');
+
+    return strippedText;
+}
+
+function checkAnswer(selectedAnswer) {
+    const correctAnswer = stripHTML(questions[currentIndex].answer.trim());
+    const cleanSelectedAnswer = typeof selectedAnswer === 'string' ? stripHTML(selectedAnswer.trim()) : null;
+
+    console.log("Correct Answer:", correctAnswer);
+    console.log("Selected Answer:", cleanSelectedAnswer);
 
     if (cleanSelectedAnswer === correctAnswer) {
-        correctAnswers++; // Incrementa em 1 para cada resposta correta
+        correctAnswers++;
         highlightCorrectOption();
     } else {
-        highlightIncorrectOption(selectedAnswer);
+        highlightIncorrectOption(cleanSelectedAnswer);
     }
 
     disableOptions();
@@ -178,23 +200,33 @@ function checkAnswer(selectedAnswer) {
 
 
 function highlightCorrectOption() {
-    const correctOption = questions[currentIndex].answer;
+    const correctAnswer = stripHTML(questions[currentIndex].answer.trim());
+
     document.querySelectorAll('.option').forEach(option => {
-        if (option.textContent.includes(correctOption)) {
-            option.style.backgroundColor = '#4CAF50';
+        if (stripHTML(option.innerHTML.trim()) === correctAnswer) {
+            option.style.backgroundColor = '#4CAF50'; // Destaca a opção correta em verde
+            console.log("Correct option highlighted:", option);
         }
     });
 }
 
 function highlightIncorrectOption(selectedAnswer) {
+    const correctAnswer = stripHTML(questions[currentIndex].answer.trim());
+
     document.querySelectorAll('.option').forEach(option => {
-        if (option.textContent.includes(selectedAnswer)) {
-            option.style.backgroundColor = '#F44336';
-        } else if (option.textContent.includes(questions[currentIndex].answer)) {
-            option.style.backgroundColor = '#4CAF50';
+        const optionText = stripHTML(option.innerHTML.trim());
+        if (optionText === selectedAnswer) {
+            option.style.backgroundColor = '#F44336'; // Destaca a opção incorreta em vermelho
+            console.log("Incorrect option highlighted:", option);
+        }
+        if (optionText === correctAnswer) {
+            option.style.backgroundColor = '#4CAF50'; // Destaca a opção correta em verde
+            console.log("Correct option highlighted:", option);
         }
     });
 }
+
+
 
 function resetOptions() {
     document.querySelectorAll('.option').forEach(option => {
