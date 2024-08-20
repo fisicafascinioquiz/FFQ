@@ -12,7 +12,7 @@ let questionsCount = 0;
 let fiftyFiftyCount = 0;
 let audiencePollCount = 0;
 const MAX_FIFTY_FIFTY_COUNT = 3;
-const MAX_AUDIENCE_POLL_COUNT = 50;
+const MAX_AUDIENCE_POLL_COUNT = 3;
 
 document.addEventListener('DOMContentLoaded', async () => {
     const urlParams = new URLSearchParams(window.location.search);
