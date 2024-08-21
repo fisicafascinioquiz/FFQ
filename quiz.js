@@ -85,6 +85,8 @@ function formatScientificNotation(text) {
 
 
 function nextQuestion() {
+    window.scrollTo(0, 0);
+    
     if (timer) {
         clearInterval(timer);
     }
